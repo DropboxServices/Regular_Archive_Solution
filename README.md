@@ -21,12 +21,13 @@ A sample script to perform regular archive of Dropbox Business content to a cent
 8. Copy the token. Store it somewhere safe. It should be protected like a password. 
 
 #Script Variables:
-1. Scriptlocation should be updated to the directory you wish to run the script from (this allows the script to find the Dropbox SDK .dll dependencies). 
-2. Logfile is the name of the text file that should store information when the script runs. 
+1. PermanentlyDelete should be set to $false to not permanently delete files from Dropbox, or $true to permanently delete them.
+2. Scriptlocation should be updated to the directory you wish to run the script from (this allows the script to find the Dropbox SDK .dll dependencies). 
+3. Logfile is the name of the text file that should store information when the script runs. 
 iii.	Exclusionfile contains the memebers that should not have archive operations run. The file is designed to be one email address per line. 
-3. daysToArchive is the maximum age in days of content before it should be archived. 
-4. Token is the security token you obtained in step 2. 
-5. ArchiveaccountEmail is the email address for the archive account on your team. This tells the script where to send archive content. 
+4. daysToArchive is the maximum age in days of content before it should be archived. 
+5. Token is the security token you obtained in step 2. 
+6. ArchiveaccountEmail is the email address for the archive account on your team. This tells the script where to send archive content. 
 
 #Running the script:
 1. To run the script from the command line, open PowerShell.exe and navigate to the script directory.  Run the script using “.\main.ps1”. 

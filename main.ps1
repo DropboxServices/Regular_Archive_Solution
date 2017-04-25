@@ -1,11 +1,12 @@
 # Uses Dropbox .NET SDK
-# jackb@dropbox.com - 12/7/2016
+# jackb@dropbox.com - Updated 4/25/2017
 
 using namespace Dropbox.Api
 
 ####################
 #Variables to update
 ####################
+$permanentlyDelete = $false
 $ScriptLocation = “C:\sample\"
 $logfile = $ScriptLocation + "log.txt"
 $exclusionFile = $ScriptLocation + "exclusions.csv"
@@ -195,8 +196,17 @@ function ArchiveFiles($memberId, $email)
                 $metaSet = $teamclient.AsMember($archiveMemberId).Files.CopyReferenceSaveAsync($copyRef, $destPath).Result
 
                 #delete original file from source user's Dropbox
-                GetLogger "[$email] Deleting original copy [$filePath]..." $false
-                $metaDelete = $teamclient.AsMember($memberId).Files.DeleteAsync($filePath).Result
+                # if permanent delete selected in variables, do that
+                if (!$permanentlyDelete)
+                {
+					GetLogger "[$email] Deleting original copy [$filePath]..." $false
+                    $metaDelete = $teamclient.AsMember($memberId).Files.DeleteAsync($filePath).Result
+                }
+                if ($permanentlyDelete)
+                {
+					GetLogger "[$email] Permanently deleting original copy [$filePath]..." $false
+                    $metaDelete = $teamclient.AsMember($memberId).Files.PermanentlyDeleteAsync($filePath).Result
+                }
 
                 if ($meta.Name -ne $null)
                 {
@@ -244,8 +254,17 @@ function ArchiveFiles($memberId, $email)
                     $metaSet = $teamclient.AsMember($archiveMemberId).Files.CopyReferenceSaveAsync($copyRef, $destPath).Result
 
                     #delete original file from source user's Dropbox
-                    GetLogger "[$email] Deleting original copy [$filePath]..." $false
-                    $metaDelete = $teamclient.AsMember($memberId).Files.DeleteAsync($filePath).Result
+                    # if permanent delete selected in variables, do that
+                    if (!$permanentlyDelete)
+                    {
+                        GetLogger "[$email] Deleting original copy [$filePath]..." $false
+                        $metaDelete = $teamclient.AsMember($memberId).Files.DeleteAsync($filePath).Result
+                    }
+                    if ($permanentlyDelete)
+                    {
+                        GetLogger "[$email] Permanently deleting original copy [$filePath]..." $false
+                        $metaDelete = $teamclient.AsMember($memberId).Files.PermanentlyDeleteAsync($filePath).Result
+                    }
 
                     if ($meta.Name -ne $null)
                     {
